@@ -34,7 +34,7 @@ App = {
           App.contracts.SimpleStorage.setProvider(App.web3Provider);
 
           // Use our contract to retrieve and mark the adopted pets
-          //return App.storageGet();
+          return App.storageGet();
       });
 
     return App.bindEvents();
@@ -45,24 +45,20 @@ App = {
     $(document).on('click', '.getBtn', App.storageGet);
   },
 
-  storageGet: function(adopters, account) {
+  storageGet: function() { //adopters, account) {
     var simpleStorageInstance;
 
     App.contracts.SimpleStorage.deployed().then(function(instance) {
         simpleStorageInstance = instance;
 
         console.log(web3.version.api);
-        var value = simpleStorageInstance.get.call();
-        console.log(value);
-        $('#myText').text(value);
 
-        return;
-    }).then(function(adopters) {
-        // for (i = 0; i < adopters.length; i++) {
-        //     if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
-        //         $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
-        //     }
-        // }
+        return simpleStorageInstance.get.call();
+    }).then(function(value) {
+
+        console.log(value);
+        $('#myText').val(value);
+
     }).catch(function(err) {
         console.log(err.message);
     });
@@ -88,8 +84,10 @@ App = {
             simpleStorageInstance = instance;
 
             // Execute adopt as a transaction by sending account
-            console.log(10);
-            return simpleStorageInstance.set(10, {from: account});
+            var value = $('#myText').val();
+            console.log(value);
+            $('#myTest').val('');
+            return simpleStorageInstance.set(value, {from: account});
         }).then(function(result) {
             return App.storageGet();
         }).catch(function(err) {
