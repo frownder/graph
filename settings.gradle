@@ -1,0 +1,3 @@
+include 'web-frontend', 'spring-boot-webapp'
+
+rootProject.name = 'ezfarm-graph'
