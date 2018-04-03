@@ -4,6 +4,8 @@
  * @since  2018.3.30
  */
 import Web3 from 'web3';
+import TruffleContract from 'truffle-contract';
+import $ from 'jquery';
 
 class BaseContract {
 
@@ -13,8 +15,7 @@ class BaseContract {
     }
 
     initWeb3() {
-
-        //Metamask
+        // Metamask
         if (typeof this.web3 !== 'undefined') {
             this.web3 = new Web3(this.web3.currentProvider);
         } else {
@@ -24,8 +25,7 @@ class BaseContract {
         }
         console.log(this.web3);
 
-        /*
-        // MetaMask. Is there an injected web3 instance?
+        /* setProvider 에러
         if (typeof Web3 !== 'undefined') {
             this.web3Provider = Web3.currentProvider;
         } else {
@@ -35,16 +35,25 @@ class BaseContract {
         console.log('BaseContract:this.web3Provider - ' + this.web3Provider);
         this.web3 = new Web3(this.web3Provider);
         */
-
-        //return this.initContract();
     }
 
-    //Overload구현 필요
-    //initContract(contractJson) {
-        //get 로컬 컨트랙트json 후 artifact data로 작업
-    //}
+    /*new 이후에 호출 필요*/
+    initContract(contractJson) {
 
+        var self = this;
+        $.getJSON(contractJson, function (data) {
+            // Get the necessary contract artifact file and instantiate it with truffle-contract
+            var contractArtifact = data;
 
+            console.log('initContract:' + self.contract);
+
+            self.contract = TruffleContract(contractArtifact);
+            self.contract.setProvider(self.web3.currentProvider);
+
+            // Use our contract to retrieve and mark the adopted pets
+            return self.getValue();
+        });
+    }
 }
 
 export default BaseContract;

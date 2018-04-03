@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Storage from './Storage.js';
-//import $ from 'jquery';
 
 class App extends Component {
 
@@ -8,23 +7,15 @@ class App extends Component {
 
     render() {
 
-        //new Storage 여기서.해보자
-        //contract 초기화
-
+        //contract 초기화 - render()밖에서 하는게 좋은데..
         this.storage.initContract('SimpleStorage.json');
-
 
         return (
           <div className="App">
-            <p className="App-intro">
-
-
                 <button onClick={this.storage.setValue}> set </button>
                 <button onClick={this.storage.getValue}> get </button>
 
                 <input id="myText" type="text" />
-
-            </p>
           </div>
         );
     }
