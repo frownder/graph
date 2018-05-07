@@ -3,13 +3,13 @@ import Storage from './Storage.js';
 
 class App extends Component {
 
-    storage = new Storage();
-
-    render() {
-
+    componentWillMount() {
+        this.storage = new Storage();
         //contract 초기화 - render()밖에서 하는게 좋은데..
         this.storage.initContract('SimpleStorage.json');
+    }
 
+    render() {
         return (
           <div className="App">
                 <button onClick={this.storage.setValue}> set </button>

@@ -49,9 +49,6 @@ class BaseContract {
 
             self.contract = TruffleContract(contractArtifact);
             self.contract.setProvider(self.web3.currentProvider);
-
-            // Use our contract to retrieve and mark the adopted pets
-            return self.getValue();
         });
     }
 }

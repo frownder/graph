@@ -10,10 +10,9 @@ class Storage extends BaseContract {
         //console.log('Storage.contract:' + this.contract.deployed());
         this.contract.deployed().then((instance) => {
             simpleStorageInstance = instance;
-
             //console.log(this.web3.version.api);
-
             return simpleStorageInstance.get.call();
+
         }).then((value) => {
             console.log(value);
             $('#myText').val(value);
@@ -33,9 +32,7 @@ class Storage extends BaseContract {
             if (error) {
                 console.log(error);
             }
-
             var account = accounts[0];
-
             self.contract.deployed().then((instance) => {
                 simpleStorageInstance = instance;
 
